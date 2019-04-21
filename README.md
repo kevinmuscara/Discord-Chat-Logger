@@ -19,6 +19,13 @@ Installation
 `npm install discord-chat-logger`
 
 
+TODO
+
+- Make some logging features optional
+- More customization
+    - 3 Different paths for each different logging type(dm, group, server)
+
+
 Example Usage
 
 ```js
