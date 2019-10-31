@@ -2,12 +2,14 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const request = require('request');
 const FtpDeploy = require('ftp-deploy');
-const client = new Discord.Client();
 const colors = require('colors');
+const GoogleSpreadsheet = require('google-spreadsheet');
+const doc = new GoogleSpreadsheet('');
+const creds = require('./client_secret.json');
+const client = new Discord.Client();
 const ftpDeploy = new FtpDeploy();
 
 module.exports.connect = function(startMsg, token) {
-    client.login(token);
     client.on('ready', () => {
         console.log(startMsg.bgGreen.black);
     });
@@ -43,11 +45,13 @@ module.exports.logPm = function(pmPath, img, id) {
                 if(message.attachments.first()) {
                     if(img) {
                         let url = message.attachments.first().url;
+                        sendRowToPm(message.attachments.first().url, message.author.username);
                         download(url, pmPath);
                     } else {}
                 } else {
                     let fileName = pmPath + message.author.id + '.txt';
                     let fileContent = message.author.username + ': ' + message.content + '\n';
+                    sendRowToPm(message.content, message.author.username);
                     lo(fileName, fileContent);
                 }
             } else {}
@@ -86,10 +90,12 @@ module.exports.logGroup = function(groupPath, img, id) {
                     if(img) {
                         let url = message.attachments.first().url;
                         download(url, groupPath);
+                      	sendRowToGroup(message.attachments.first().url, message.author.username);
                     } else {}
                 } else {
                     let fileName = groupPath + message.channel.id+ '.txt';
                     let fileContent = '[' + message.channel.name + '] ' + message.author.username + ': ' + message.content + '\n';
+                    sendRowToGroup(message.content, message.author.username);
                     lo(fileName, fileContent);
                 }
             } else {}
@@ -131,11 +137,13 @@ module.exports.logServer = function(serverPath, img, id) {
                 if(message.attachments.first()) {
                     if(img) {
                         let url = message.attachments.first().url;
+                      	sendRowToServer(message.attachments.first().url, message.author.username);
                         download(url, serverPath);
                     } else {}
                 } else {
                     let fileName = serverPath + message.guild.id+ '.txt';
                     let fileContent = '[' + message.guild.name + '] ' + message.author.username + ': ' + message.content + '\n';
+                   	sendRowToServer(message.content, message.author.username, message.guild.name);
                     lo(fileName, fileContent);
                 }
             }
@@ -148,6 +156,34 @@ function makeRandom(length) {
     for(let i = 0; i < length; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
     return text;
 }
+
+function sendRowToPm(mess, user) {
+    doc.useServiceAccountAuth(creds, function(err) {
+        if(err) console.log(err);
+        doc.addRow(1, { Username: user, Message: mess }, function(err) {
+            if(err) console.log(err);
+        });
+    });
+}
+
+function sendRowToGroup(mess, user) {
+    doc.useServiceAccountAuth(creds, function(err) {
+        if(err) console.log(err);
+        doc.addRow(2, { Username: user, Message: mess }, function(err) {
+            if(err) console.log(err);
+        });
+    });
+}
+
+function sendRowToServer(mess, user, serv) {
+    doc.useServiceAccountAuth(creds, function(err) {
+        if(err) console.log(err);
+        doc.addRow(3, { Username: user, Message: mess, Server: serv }, function(err) {
+            if(err) console.log(err);
+        });
+    });
+}
+
 
 function upload(config) {
     ftpDeploy.deploy(config)
