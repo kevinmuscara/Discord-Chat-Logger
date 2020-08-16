@@ -20,4 +20,5 @@ const logger = new Logger(client, {
         log: true,
         logImage: true
     }
-});```
+});
+```
