@@ -1,6 +1,6 @@
 {
   "name": "discord-chat-logger",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "",
   "main": "./src/index.js",
   "scripts": {},
@@ -9,6 +9,12 @@
   "license": "MIT",
   "dependencies": {
     "colors": "^1.4.0",
-    "discord.js": "^12.3.1"
+    "discord.js": "^12.3.1",
+    "mongoose": "^5.10.1"
+  },
+  "homepage": "https://github.com/kevinmuscara/Discord-Chat-Logger/#readme.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinmuscara/discord-chat-logger.git"
   }
 }
