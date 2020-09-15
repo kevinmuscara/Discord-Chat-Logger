@@ -1,6 +1,6 @@
 # Discord Chat Logger
 
-Standard usage
+Usage
 
 ```js
 const { Client } = require('discord.js');
@@ -8,44 +8,23 @@ const client = new Client();
 
 const Logger = require('discord-chat-logger');
 const logger = new Logger(client, {
-    pm: {
-        log: true,
-        logImage: true
-    },
-    group: {
-        log: true,
-        logImage: true
-    },
-    server: {
-        log: true,
-        logImage: true
-    }
+    pm: true,
+    group: true,
+    server: true,
+    mongo: null
 });
 ```
 
-Usage with MongoDB
-
+Usage with mongo
 ```js
 const { Client } = require('discord.js');
 const client = new Client();
 
 const Logger = require('discord-chat-logger');
 const logger = new Logger(client, {
-    mongo: {
-        enabled: true,
-        url: `YOUR_MONGODB_CONNECT_URL`
-    },
-    pm: {
-        log: true,
-        logImage: true
-    },
-    group: {
-        log: true,
-        logImage: true
-    },
-    server: {
-        log: true,
-        logImage: true
-    }
+    pm: true,
+    group: true,
+    server: true,
+    mongo: 'MONGO DB URL'
 });
 ```
