@@ -1,23 +1,19 @@
 {
   "name": "discord-chat-logger",
-  "version": "0.0.6",
-  "description": "",
+  "version": "0.0.7",
+  "description": "Effecient discord event, and chat logger for Discord v13 API Clients.",
   "main": "./src/index.js",
   "scripts": {},
   "keywords": [
     "Discord",
     "Logger",
-    "Chat",
-    "mongo",
-    "database"
+    "Chat"
   ],
-  "author": "kevin muscara",
+  "author": "Kevin Muscara",
   "license": "MIT",
   "dependencies": {
-    "colors": "^1.4.0",
     "discord.js": "^12.3.1",
-    "fs": "0.0.1-security",
-    "mongoose": "^5.10.5"
+    "pg": "^8.7.1"
   },
   "homepage": "https://github.com/kevinmuscara/Discord-Chat-Logger/#readme.md",
   "repository": {
